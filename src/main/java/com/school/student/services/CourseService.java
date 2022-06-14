@@ -1,5 +1,7 @@
 package com.school.student.services;
 
+
+import com.school.student.exception.NotFoundException;
 import com.school.student.models.Course;
 import com.school.student.respositories.CourseRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,9 @@ public class CourseService {
     }
     public Course findById(Long id){
         Optional<Course> obj = repository.findById(id);
-        return obj.get();
+        Course result = obj.orElseThrow(()-> new NotFoundException("Objeto não encontrado!"));
+
+        return result;
     }
     public Course save(Course course){
         Course result = repository.save(course);

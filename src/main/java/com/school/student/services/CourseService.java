@@ -65,4 +65,8 @@ public class CourseService {
             throw new DataException("Integrity violation");
         }
     }
+
+    public boolean existsByCourse(String course) {
+        return repository.existsByCourse(course);
+    }
 }

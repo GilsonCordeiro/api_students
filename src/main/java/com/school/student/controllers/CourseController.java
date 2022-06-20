@@ -32,7 +32,11 @@ public class CourseController {
     }
     @PostMapping
     @ApiOperation(value = "Create course")
-    public ResponseEntity<Course> save(@RequestBody Course course){
+    public ResponseEntity<?> save(@RequestBody Course course){
+        if (service.existsByCourse(course.getCourse())){
+            var resp = ResponseEntity.status(HttpStatus.CONFLICT).body("Curso já cadastrado!");
+            return resp;
+        }
         Course result = service.save(course);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }

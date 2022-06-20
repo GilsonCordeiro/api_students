@@ -4,7 +4,6 @@ package com.school.student.controllers;
 import com.school.student.models.Student;
 import com.school.student.services.StudentService;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +32,11 @@ public class StudentController {
     }
     @PostMapping
     @ApiOperation(value = "Create students")
-    public ResponseEntity<Student> save(@RequestBody Student student){
+    public ResponseEntity<?> save(@RequestBody Student student){
+        if (service.existsByEmail(student.getEmail())){
+            var resp = ResponseEntity.status(HttpStatus.CONFLICT).body("Conflito: Email já cadastrado!");
+            return resp;
+        }
        Student result = service.save(student);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }

@@ -60,4 +60,8 @@ public class StudentService {
             throw new DataException("Integrity violation");
         }
     }
+
+    public boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
+    }
 }

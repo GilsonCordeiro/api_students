@@ -32,4 +32,14 @@ public class StudentController {
        Student result = service.save(student);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<Student> update(@PathVariable Long id, @RequestBody Student student){
+        student = service.update(id, student);
+        return ResponseEntity.ok().body(student);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Student> delete(@PathVariable Long id){
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

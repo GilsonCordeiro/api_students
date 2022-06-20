@@ -24,9 +24,10 @@ public class StudentService {
         List<Student> result = repository.findAll();
         return result;
     }
-    public Student findById(@PathVariable Long id){
+    public Student findById(Long id){
         Optional<Student> obj = repository.findById(id);
-        return obj.get();
+        Student result = obj.orElseThrow(()-> new NotFoundException("Id not found"));
+        return result;
     }
     public Student save(Student student){
         Student result = repository.save(student);

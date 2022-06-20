@@ -32,4 +32,17 @@ public class CourseController {
         Course result = service.save(course);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
+    @PutMapping("/{id}")
+//    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Course> update(@PathVariable Long id, @RequestBody Course course){
+        course = (Course) service.update(id, course);
+        return ResponseEntity.ok().body(course);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Course> delete(@PathVariable Long id){
+        service.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -20,4 +20,16 @@ public class ExceptionHandle {
         err.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
+
+    @ExceptionHandler(DataException.class)
+    public ResponseEntity<StandarError> dataException (DataException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandarError err = new StandarError();
+        err.setTimeTamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("Database exception");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
 }

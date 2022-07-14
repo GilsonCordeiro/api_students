@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @RestController
@@ -26,9 +27,18 @@ public class CourseController {
     }
     @GetMapping("/{id}")
     @ApiOperation(value = "List course por id")
-    public ResponseEntity<Course> findById(@PathVariable Long id){
-        Course obj = service.findById(id);
-        return ResponseEntity.ok().body(obj);
+   public ResponseEntity<Object> findById(@PathVariable Long id){
+//        Course obj = service.findById(id);
+//        return ResponseEntity.ok().body(obj);
+
+        // **** Outra forma de tratar quando é solicitado um id não existente
+        Optional<Course> objOptional = Optional.ofNullable(service.findById(id));
+        if (!objOptional.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recurso nao encontrado");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(objOptional.get());
+
+
     }
     @PostMapping
     @ApiOperation(value = "Create course")
@@ -42,7 +52,6 @@ public class CourseController {
     }
     @PutMapping("/{id}")
     @ApiOperation(value = "Update course")
-//    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Course> update(@PathVariable Long id, @RequestBody Course course){
         course = (Course) service.update(id, course);
         return ResponseEntity.ok().body(course);
@@ -51,8 +60,9 @@ public class CourseController {
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Delete course")
-    public ResponseEntity<Course> delete(@PathVariable Long id){
-        service.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
+    public ResponseEntity<?> delete(@PathVariable Long id){
+    service.deleteById(id);
+    return ResponseEntity.status(HttpStatus.OK).body("Deletado com sucesso");
+
+}
 }

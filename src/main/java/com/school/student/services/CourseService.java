@@ -54,7 +54,7 @@ public class CourseService {
         }
 
     }
-    public void delete(@PathVariable Long id){
+    public void delete(@PathVariable Course id){
         try {
             repository.deleteById(id);
         }

@@ -11,12 +11,15 @@ public class Course implements Serializable {
     private Long id;
     private String course;
     private Double monthly;
-    private String institution;
+
+    @ManyToOne
+    @JoinColumn(name = "id_instituion")
+    private Institution institution;
 
     public Course() {
     }
 
-    public Course(Long id, String course, Double monthly, String institution) {
+    public Course(Long id, String course, Double monthly, Institution institution) {
         this.id = id;
         this.course = course;
         this.monthly = monthly;
@@ -47,11 +50,11 @@ public class Course implements Serializable {
         this.monthly = monthly;
     }
 
-    public String getInstitution() {
+    public Institution getInstitution() {
         return institution;
     }
 
-    public void setInstitution(String institution) {
+    public void setInstitution(Institution institution) {
         this.institution = institution;
     }
 }

@@ -1,5 +1,7 @@
 package com.school.student.models;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.io.Serializable;
 @Entity
@@ -11,6 +13,8 @@ public class Course implements Serializable {
     private Long id;
     private String course;
     private Double monthly;
+
+    @Column(nullable = false)
     private String institution;
 
     public Course() {

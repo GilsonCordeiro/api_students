@@ -32,4 +32,16 @@ public class ExceptionHandle {
         err.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
+
+    @ExceptionHandler(ConflitException.class)
+    public ResponseEntity<StandarError> dataException (ConflitException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.CONFLICT;
+        StandarError err = new StandarError();
+        err.setTimeTamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("Conflit exception");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
 }
